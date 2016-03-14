@@ -13,6 +13,13 @@ pi_first_ten_thousand = "3.14159 26535 89793 23846 26433 83279 50288 41971 69399
 
 #This takes the above mess and compresses it down to just digits, no 
 #spaces or decimal points.  Note: I'm assuming that 3 could be the start
-#of the phone number.
-first_ten_k = pi_first_ten_thousand.scan(/\d/).join('').to_i
+#of the phone number.  Also, I'm keeping it as a string until I've counted
+#out the first 3,000 digits so as to take advantage of some of the slicing
+#stuff you can do with strings.
+first_ten_k = pi_first_ten_thousand.scan(/\d/).join('')
 
+#This just tells the computer to start at the beginning of the string and 
+#count off 3,000 elements of that string.
+first_three_k = first_ten_k[0,3000]
+
+puts first_three_k
