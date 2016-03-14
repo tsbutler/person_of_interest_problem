@@ -19,7 +19,9 @@ pi_first_ten_thousand = "3.14159 26535 89793 23846 26433 83279 50288 41971 69399
 first_ten_k = pi_first_ten_thousand.scan(/\d/).join('')
 
 #This just tells the computer to start at the beginning of the string and 
-#count off 3,000 elements of that string.
-first_three_k = first_ten_k[0,3000]
+#count off 3,000 elements of that string.  The to_i bit, naturally, just 
+#takes the string and converts it to an integer.
+first_three_k = first_ten_k[0,3000].to_i
 
-puts first_three_k
+phone_number_array = []
+ 
