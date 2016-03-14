@@ -1,3 +1,5 @@
+require 'Pry'
+
 # Okay, so this is me working through a problem I heard on a show called #"Person of Interest".  One of the main protagonists is a reclusive #billionaire hacker extraordinaire and in the course of one of the episodes, #in particular the one ("2 Pi R") in which he delivers a great little speech #about pi, he meets a young genius hacker type and drama ensues.  At any rate, #as the episode draws to a close, he hands the kid a card with a string of #numbers on it.  The kid asks what it is.  Our protagonist replies, "Pi. The #first 3,000 digits. My number's in there somewhere. You're smart, you'll #figure it out."  So, the point of this little program is to see, two things.  #One, is this a particularly difficult challenge?  Two, how many possible #solutions can I sift out of the first 3,000 digits.  So, to start with I'm #making a couple of assumptions.  Foremost among these, is that the phone #number will appear as one chunk in order at some point in the string of #numbers.  I'm also assuming that it's a standard 10-digit phone number and #that it shows up as plain text.  Additionally, I'm taking it as given that #the phone number is local to the USA.  The guy's a billionaire, so could #theoretically have a phone number from anywhere and not freak out about his #monthly bill, but I'm going to assume for the sake of simplicity that he's #keeping it local.  I'll be making other assumptions later, but for not we'll #stick with those.  I'll be sure to pipe up and let you know when/if I make #more.
 
 #This mess of a thing is the first 10,000 digits of pi according to the 
@@ -19,9 +21,24 @@ pi_first_ten_thousand = "3.14159 26535 89793 23846 26433 83279 50288 41971 69399
 first_ten_k = pi_first_ten_thousand.scan(/\d/).join('')
 
 #This just tells the computer to start at the beginning of the string and 
-#count off 3,000 elements of that string.  The to_i bit, naturally, just 
-#takes the string and converts it to an integer.
-first_three_k = first_ten_k[0,3000].to_i
+#count off 3,000 elements of that string.
+first_three_k = first_ten_k[0,3000]
 
+#This creates an empty array to shove all the phone number possibles into.
 phone_number_array = []
- 
+
+#This loops through our first 3,000 digits of pi to determine create a list
+#of possible phone numbers.  Note:  This produces 2991 possible phone numbers.
+#My thinking here is that if we adhere to our original assumptions, i.e., that
+#the number is in plaintext and is a 10-digit number, then that means there #are only 2991 possible numbers.  If you started counting out a number on digit
+#2992 of our 3,000 digits, then you'd wind up with a 9-digit number.  So, not 
+#what we're looking for.
+i = 0
+while i < 2991
+  phone_number = first_three_k[i, 10]
+  phone_number_array << phone_number
+  i += 1
+end
+puts first_three_k[-10,10]
+puts phone_number_array[-1]
+puts phone_number_array.length
