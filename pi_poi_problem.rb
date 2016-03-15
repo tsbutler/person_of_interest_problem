@@ -52,5 +52,22 @@ area_codes_hash = {403 => "AB", 907 => "AK", 205 => "AL", 256 => "AL", 334 => "A
 #we've got to see if that shrinks our list down substantially.
 area_codes_array = area_codes_hash.keys
 
+
+possible_number_array = []
+
+area_codes_array.each do |code|
+grep_result = phone_number_array.grep(/\A#{code}/)
+possible_number_array << grep_result
+end
+
+phone_numbers = possible_number_array.flatten
+
+
+# phone_number_array.grep(/\A058/)
+Pry.start(binding)
+
 #Leaving off on this for today.  I think that the solution will be to do some 
 #sort of a partial search with the grep method.  We'll see.
+
+
+
