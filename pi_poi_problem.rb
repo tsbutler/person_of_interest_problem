@@ -70,7 +70,18 @@ end
 #the number of possibles down to 938, but we can do better I think.
 phone_numbers = possible_number_array.flatten
 
-
+#So, a bit of research has shown me that the second set of three digits in a 
+#phone number can't begin with 0 or 1.  This bit of trivia may or may not help 
+#shrink our list further.  Below is my seeing if it does.
+phone_numbers_nxx = []
+phone_numbers.each do |number|
+  if number[3] != 0 || 1
+    phone_numbers_nxx << number
+  end
+end
+#Okay, the above did shrink the list, but not by much. 938 vs 983.  However, in
+#reviewing the contents of phone_numbers_nxx there were numbers that shouldn't 
+#be in the array.  So, need to fiddle with this a bit more, but not now...
 
 Pry.start(binding)
 
