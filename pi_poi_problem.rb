@@ -52,18 +52,26 @@ area_codes_hash = {403 => "AB", 907 => "AK", 205 => "AL", 256 => "AL", 334 => "A
 #we've got to see if that shrinks our list down substantially.
 area_codes_array = area_codes_hash.keys
 
-
+#This is an empty array to shove all the possible phone numbers that have
+#legitimate area codes.
 possible_number_array = []
 
+#This will cycle through all the area codes in the area code array and search
+#the possible phone number array we derived from the first 3,000 digits of pi
+#for matches to real area codes.  Then, it'll stuff them into the possible 
+#number array.
 area_codes_array.each do |code|
 grep_result = phone_number_array.grep(/\A#{code}/)
 possible_number_array << grep_result
 end
 
+#The previous loop kicks out a nice big array...of arrays.  The .flatten method
+#does just that, it flattens the array down to a single level.  The loop shrank
+#the number of possibles down to 938, but we can do better I think.
 phone_numbers = possible_number_array.flatten
 
 
-# phone_number_array.grep(/\A058/)
+
 Pry.start(binding)
 
 #Leaving off on this for today.  I think that the solution will be to do some 
