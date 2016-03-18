@@ -70,19 +70,34 @@ end
 #the number of possibles down to 938, but we can do better I think.
 phone_numbers = possible_number_array.flatten
 
+# Okay, tried to get a frequency hash of the numbers in the array.  My 
+# thinking is that one way of paring down the list is to determine if there 
+# are any redundant items in the array.  Yes, pi doesn't repeat itself, but 
+# that doesn't mean that at no place in 3,000 digits will it have repeated 
+# itself ever.  The code below didn't work, I've had it or similar work in the # past though.  I'll look at that.  Beyond this, I think it would be useful in # shrinking the list to generate an array of the area codes that are in this  # list, get a frequency hash on them and then use that as a basis for tracking # down NXX codes.  That, hopefully, will shrink the number I need to scrape.  # It's also important to get the code I attempted that would search for and 
+# exclude those numbers that have either a 1 or a 0 for their 4th digit.  
+# Those aren't valid phone numbers and so can be excluded.  Adding all that 
+# together, I might well be able to shrink the list considerably to where I 
+# can make a few deductions abotu which number in this mess could belong to 
+# the fictional character.  Granted, whatever number I do find will likely 
+# belong to some random business or person, but actually finding a fictional 
+# character, obviously, isn't the point of this.
+counts = {}
+phone_numbers.each_with_object(Hash.new(0)) { |number,counts| counts[number] += 1 }
+
 #So, a bit of research has shown me that the second set of three digits in a 
 #phone number can't begin with 0 or 1.  This bit of trivia may or may not help 
 #shrink our list further.  Below is my seeing if it does.
-phone_numbers_nxx = []
-phone_numbers.each do |number|
-  if number[3] != 0 || 1
-    phone_numbers_nxx << number
-  end
-end
+# phone_numbers_nxx = []
+# phone_numbers.each do |number|
+#   if number[3] != 0 || 1
+#     phone_numbers_nxx << number
+#   end
+# end
 #Okay, the above did shrink the list, but not by much. 938 vs 983.  However, in
 #reviewing the contents of phone_numbers_nxx there were numbers that shouldn't 
 #be in the array.  So, need to fiddle with this a bit more, but not now...
-
+print counts
 Pry.start(binding)
 
 #Leaving off on this for today.  I think that the solution will be to do some 
