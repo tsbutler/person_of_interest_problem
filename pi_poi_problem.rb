@@ -70,40 +70,36 @@ end
 #the number of possibles down to 938, but we can do better I think.
 phone_numbers = possible_number_array.flatten
 
-# Okay, tried to get a frequency hash of the numbers in the array.  My 
-# thinking is that one way of paring down the list is to determine if there 
-# are any redundant items in the array.  Yes, pi doesn't repeat itself, but 
-# that doesn't mean that at no place in 3,000 digits will it have repeated 
-# itself ever.  The code below didn't work, I've had it or similar work in the # past though.  I'll look at that.  Beyond this, I think it would be useful in # shrinking the list to generate an array of the area codes that are in this  # list, get a frequency hash on them and then use that as a basis for tracking # down NXX codes.  That, hopefully, will shrink the number I need to scrape.  # It's also important to get the code I attempted that would search for and 
-# exclude those numbers that have either a 1 or a 0 for their 4th digit.  
-# Those aren't valid phone numbers and so can be excluded.  Adding all that 
-# together, I might well be able to shrink the list considerably to where I 
-# can make a few deductions abotu which number in this mess could belong to 
-# the fictional character.  Granted, whatever number I do find will likely 
-# belong to some random business or person, but actually finding a fictional 
-# character, obviously, isn't the point of this.
-counts = {}
-phone_numbers.each_with_object(Hash.new(0)) { |number,counts| counts[number] += 1 }
-
 #So, a bit of research has shown me that the second set of three digits in a 
 #phone number can't begin with 0 or 1.  This bit of trivia may or may not help 
 #shrink our list further.  Below is my seeing if it does.
 
-# phone_numbers_nxx = []
-# phone_numbers.each do |number|
-#   if number[3] != 0 || 1
-#     phone_numbers_nxx << number
-#   end
-# end
+phone_numbers_ones_and_zeroes = []
+phone_numbers.each do |number|
+  if number[3].to_i >= 2
+    phone_numbers_ones_and_zeroes << number
+  end
+end
 
-#Okay, the above did shrink the list, but not by much. 938 vs 983.  However, in
-#reviewing the contents of phone_numbers_nxx there were numbers that shouldn't 
-#be in the array.  So, need to fiddle with this a bit more, but not now...
-print counts
-Pry.start(binding)
+# The above shrunk our list down from 983 to 760, so that's good.  Now I'm 
+# going to try and get an array of of the area codes that are used by those 
+# 760 possible numbers.  That way I can make a histogram of them and only have # to search for nxx codes that go with those area codes.
+filtered_area_code_array = []
+phone_numbers_ones_and_zeroes.each do |number|
+  filtered_area_code_array << number[0,3]
+end
 
-#Leaving off on this for today.  I think that the solution will be to do some 
-#sort of a partial search with the grep method.  We'll see.
+# Okay, what the output of the code below tells us is that there are 297 different area codes that appear in our area code array.
 
+# freqs = Hash.new(0)
+# filtered_area_code_array.each { |code| freqs[code] += 1 }
 
+# puts freqs.keys.count
 
+# The code below outputs 760.  Basically, our previous filtering had reduced 
+# the number of possible phone numbers to 760.  Since the code below creates a # hash that counts up the frequency of each item in the array and the number 
+# of keys in that hash is 760, we don't have any duplicate numbers.
+duplicate_check = Hash.new(0)
+phone_numbers_ones_and_zeroes.each { |number| duplicate_check[number] += 1 }
+
+puts duplicate_check.keys.count
