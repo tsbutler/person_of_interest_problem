@@ -91,15 +91,26 @@ end
 
 # Okay, what the output of the code below tells us is that there are 297 different area codes that appear in our area code array.
 
-# freqs = Hash.new(0)
-# filtered_area_code_array.each { |code| freqs[code] += 1 }
+freqs = Hash.new(0)
+filtered_area_code_array.each { |code| freqs[code] += 1 }
 
 # puts freqs.keys.count
 
 # The code below outputs 760.  Basically, our previous filtering had reduced 
 # the number of possible phone numbers to 760.  Since the code below creates a # hash that counts up the frequency of each item in the array and the number 
 # of keys in that hash is 760, we don't have any duplicate numbers.
-duplicate_check = Hash.new(0)
-phone_numbers_ones_and_zeroes.each { |number| duplicate_check[number] += 1 }
 
-puts duplicate_check.keys.count
+# duplicate_check = Hash.new(0)
+# phone_numbers_ones_and_zeroes.each { |number| duplicate_check[number] += 1 }
+
+# puts duplicate_check.keys.count
+
+# Below, takes some of the mess we have above and tells us a list of area 
+# codes that we've got to track down NXX numbers for.  Then, the plan is to 
+# compare the list of numbers we've got against a list of valid area code/NXX # combinations and see if we can't shrink the list down even more.  So, I'll 
+# need to write a little web scrapping code to do that.
+area_codes_to_scrape = freqs.keys.sort
+
+
+
+
