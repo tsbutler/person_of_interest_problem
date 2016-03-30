@@ -1,4 +1,6 @@
 require 'Pry'
+require 'Mechanize'
+require 'Nokogiri'
 
 # Okay, so this is me working through a problem I heard on a show called #"Person of Interest".  One of the main protagonists is a reclusive #billionaire hacker extraordinaire and in the course of one of the episodes, #in particular the one ("2 Pi R") in which he delivers a great little speech #about pi, he meets a young genius hacker type and drama ensues.  At any rate, #as the episode draws to a close, he hands the kid a card with a string of #numbers on it.  The kid asks what it is.  Our protagonist replies, "Pi. The #first 3,000 digits. My number's in there somewhere. You're smart, you'll #figure it out."  So, the point of this little program is to see, two things.  #One, is this a particularly difficult challenge?  Two, how many possible #solutions can I sift out of the first 3,000 digits.  So, to start with I'm #making a couple of assumptions.  Foremost among these, is that the phone #number will appear as one chunk in order at some point in the string of #numbers.  I'm also assuming that it's a standard 10-digit phone number and #that it shows up as plain text.  Additionally, I'm taking it as given that #the phone number is local to the USA.  The guy's a billionaire, so could #theoretically have a phone number from anywhere and not freak out about his #monthly bill, but I'm going to assume for the sake of simplicity that he's #keeping it local.  I'll be making other assumptions later, but for now we'll #stick with those.  I'll be sure to pipe up and let you know when/if I make #more.
 
@@ -111,6 +113,17 @@ filtered_area_code_array.each { |code| freqs[code] += 1 }
 # need to write a little web scrapping code to do that.
 area_codes_to_scrape = freqs.keys.sort
 
+# The code below might work, but needs some tweaking.  I'll need to look at it # at a later time.
+nxx = []
+code_nxx = {}
+mechanize = Mechanize.new
 
+area_codes_to_scrape.each do |code|
+  page = mechanize.get("http://www.area-codes.com/area-code/area-code-#{code}.asp")
+    page.xpath("//li").each do |link|
+      nxx << link.content.scan(/\d/).join('')
+    end
+  code_nxx[code] = nxx  
+end
 
-
+puts code_nxx
